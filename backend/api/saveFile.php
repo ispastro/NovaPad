@@ -4,6 +4,7 @@ require_once '../core/helpers.php';
 require_once '../core/fileManager.php';
 
 
+
 $data = json_decode(file_get_contents('php://input'), true);
 
 
@@ -22,9 +23,12 @@ $fileManager =new FileManager(BASE_PATH, VERSION_PATH);
 
 if($fileManager->saveFile($fileName, $content)){
     jsonResponse("success", "file saved successfully");
-} else {
+} 
+
+else {
     jsonResponse("error", "Failed to save the file.");
 }
 
 
 ?>
+

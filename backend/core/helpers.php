@@ -14,6 +14,10 @@ function jsonResponse($status, $message, $data=[]){
 }
 
 
+
+
+
+
 // this function removes wierd characters from the file name and replaces them with _
 function sanitizeFileName($fileName){
     $fileName=preg_replace('/[^a-zA-Z0-9-_\.]/','_',$fileName);
