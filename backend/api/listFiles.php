@@ -20,9 +20,12 @@ $files =$fileManager->listFiles();
 
 
 if(empty($files)){
-    jsonResponse('')
+    jsonResponse( 'success','File not found', []);
+}
+else {
+    jsonResponse('success', 'Files listed successfully!', $files);
 }
 
 
-
 ?>
+
