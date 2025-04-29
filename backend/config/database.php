@@ -5,7 +5,7 @@ class Database{
     private $host="localhost";
     private $db_name="note_pad";
     private $username ="root";
-    private $password ="";
+    private $password ="MyLaravelDev@2025";
     public $conn;
 
     public function connect(){

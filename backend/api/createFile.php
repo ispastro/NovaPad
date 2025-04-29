@@ -1,41 +1,49 @@
 <?php
 
 
+//hEADERS
+header('Accesss-Control-Allow-Origin:*');
+header('Content-Type :application/json');
 
-// get the incoming Json data
+//inlude database and model
+
+include_once('../config/database.php');
+include_once('../models/File.php');
 
 
-$data =json_decode(file_get_contents('php://input'), true);
+//Instantiate DB
 
-// check if fileNam eis provided
+$database =new Database();
+$db =$database->connect();
 
-if(!isset($data['fileName'])){
-    jsonResponse('error', 'Filename is required');
+
+
+// instantiate File object
+
+
+$file =new File($db);
+
+
+// get raw posted data
+
+$data =json_decode(file_get_contents('php://input'));
+if(!empty($data->fileName) && isset($data->connect)){
+    $file->fileName =$data->fileName;
+    $file->content=$data->content;
+
+
+    ($file->create()){
+        echo json_decode(["Message"=>"File Created successfully"]);
+    }
+    else{
+        echo json_encode(["message"=>"File not created"]);
+    }
 }
 
-// santize filename (remove bad characters)
-
-$fileName =sanitizeFileName($data['fileName']);
-
-//initialize FileManager
-
-
-$fileManager =new FileManager(BASE_PATH, VERSION_PATH);
-//Check if file already exists
-
-$fullPath =BASE_PATH .'/'.$fileName;
-
-if(file_exists($fullPath)){
-  jsonResponse('error', 'File already exists');
-}
-
-// create an empty file
-if(file_put_contents($fullPath,'')!==false){
-    jsonResponse('success','File created successfully.');
-}
 else{
-    jsonResponse('error', 'Failed to create file.');
+    echo json_encode(["message"=>"Incomplete Data"]);
 }
+
 
 
 ?>
