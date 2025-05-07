@@ -1,49 +1,44 @@
 <?php
 
 
-//hEADERS
-header('Accesss-Control-Allow-Origin:*');
-header('Content-Type :application/json');
-
-//inlude database and model
-
-include_once('../config/database.php');
-include_once('../models/File.php');
+head("Access-Control-Allow-Origin");
+head("Content-Type:application/json");
+include_once("../config/database.php");
+include_once("../models/File.php");
 
 
-//Instantiate DB
+
+
+// create instance of the database 
 
 $database =new Database();
-$db =$database->connect();
+$db=$database->connect();
+
+
+$file = new File($db);  //this creates the file object and gives it access
 
 
 
-// instantiate File object
-
-
-$file =new File($db);
-
-
-// get raw posted data
-
-$data =json_decode(file_get_contents('php://input'));
-if(!empty($data->fileName) && isset($data->connect)){
-    $file->fileName =$data->fileName;
+$data =json_decode(file_get_contents("input://php"));
+if(!empty(filename) && isset($data->content)){
+    $file->filename =$data->filename;
     $file->content=$data->content;
 
+    if($file->create()){
+        echo json_encode("message"    =>" file created successfully");
 
-    ($file->create()){
-        echo json_decode(["Message"=>"File Created successfully"]);
     }
     else{
-        echo json_encode(["message"=>"File not created"]);
+        echo json_encode("message"=>"sth went wrong");
     }
+
+
 }
+esle{
+    echo json_encode("message"=>"Incomplete data");
 
-else{
-    echo json_encode(["message"=>"Incomplete Data"]);
 }
-
-
 
 ?>
+
+
