@@ -1,29 +1,22 @@
 <?php
 
-
 require_once '../config/config.php';
 require_once '../core/helpers.php';
 require_once '../core/fileManager.php';
-// Creating the object of file manager 
-$fileManager =new FileManager(BASE_PATH, VERSION_PATH);
 
+// Instantiate FileManager
+$fileManager = new FileManager(BASE_PATH, VERSION_PATH);
 
-// get th elists of the files
+// Fetch file list
+try {
+    $files = $fileManager->listFiles();
 
-$files =$fileManager->listFiles();
+    if (empty($files)) {
+        jsonResponse('success', 'No files found.', []);
+    }
 
+    jsonResponse('success', 'Files listed successfully.', $files);
 
-
-// check if the file is empty
-
-
-if(empty($files)){
-    jsonResponse( 'success','File not found', []);
+} catch (Exception $e) {
+    jsonResponse('error', 'Failed to retrieve file list: ' . $e->getMessage());
 }
-else {
-    jsonResponse('success', 'Files listed successfully!', $files);
-}
-
-
-?>
-
