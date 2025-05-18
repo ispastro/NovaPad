@@ -10,7 +10,8 @@ class FileManager {
     }
 
     public function save($fileName, $content) {
-        $filePath = $this->basePath . '/' . $fileName;
+        $filePath = $this->basePath . '/' . basename($fileName);
+        
         if (file_exists($filePath)) {
             $this->saveVersion($fileName);
         }

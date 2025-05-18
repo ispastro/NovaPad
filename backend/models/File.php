@@ -37,6 +37,15 @@ class File {
     return $stmt->execute();
 }
 
+public function listFiles() {
+    $query = "SELECT * FROM " . $this->table . " ORDER BY created_at DESC";
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
 
     // (later we'll add list, delete, etc.)
 }

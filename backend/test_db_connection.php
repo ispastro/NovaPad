@@ -1,5 +1,5 @@
 <?php
-require_once 'core/database.php';  // adjust the path if needed
+require_once 'config/database.php';  // adjust the path if needed
 
 $database = new Database();
 $conn = $database->connect();

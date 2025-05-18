@@ -1,9 +1,14 @@
 <?php
+header("Access-Control-Allow-Origin: *"); // Or restrict to your frontend domain
+header("Access-Control-Allow-Methods: POST, GET, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Content-Type: application/json");
 
 require_once '../core/helpers.php';
 require_once '../core/fileManager.php';
 require_once '../models/File.php';
 require_once '../config/database.php';
+
 
 
 
@@ -25,7 +30,7 @@ $fileManager =new FileManager(BASE_PATH, VERSION_PATH);
 
 
 if(!$fileManager->save($filename, $content)){
-    jsonResponse("success", "file saved successfully");
+    jsonResponse("error", "file  couldn't be saved");
 } 
 try{
     $db =(new Database())->getConnection();
@@ -40,8 +45,8 @@ try{
 
 }
 catch(Exception $e){
-    jsonResponse("warning", "file Saved , but database error:".$e.getMessage());
-    
+    jsonResponse("warning", "file Saved , but database error:".$e->getMessage());
+
 }
 ?>
 
