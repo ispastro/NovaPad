@@ -28,6 +28,16 @@ class File {
         return false;
     }
 
+    public function delete() {
+    $query = "DELETE FROM " . $this->table . " WHERE filename = :filename";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':filename', $this->filename);
+
+    return $stmt->execute();
+}
+
+
     // (later we'll add list, delete, etc.)
 }
 
